@@ -113,7 +113,7 @@ function App() {
                     item.quantity = 0;
                 });
                 setInitData(data);
-                // dispatchProducts({ type: "FETCH_INIT", payload: data });
+                localStorage.setItem("initData", JSON.stringify(data));
             })
             .catch((err) => console.error(err));
     }, []);

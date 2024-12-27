@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import Header from "../../components/Header";
 
 // todo: da spostare in una cartella db
@@ -33,9 +33,13 @@ const flavorColors = [
 ];
 
 function CardDetail() {
+    const { cardID } = useParams();
     const location = useLocation();
     let product = location.state;
-    // fixme: product è undefined quando si ricarica
+    const data = JSON.parse(localStorage.getItem("initData"));
+    if (!product) {
+        product = data.find((prod) => prod.id == cardID);
+    }
     // todo: migrare su styled-components per maggiore leggibilità
     // todo: (non necessario) sistemare layout usando grid
     // todo: strutturare in componenti

@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect, useMemo } from "react";
+import { useReducer, useState, useEffect } from "react";
 import { GlobalContext } from "./state-management/stores/GlobalContext";
 import productsReducer from "./state-management/reducers/products";
 import styled from "styled-components";
@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import "./App.css";
-import { Link } from "react-router";
 
 const CardsSection = styled.section`
     width: 100%;
@@ -95,8 +94,6 @@ function App() {
             .catch((err) => console.error(err));
     }, []);
 
-    // const [count, setCount] = useState(0);
-
     return (
         <GlobalContext.Provider
             value={{
@@ -109,12 +106,6 @@ function App() {
                 setIsModal,
             }}
         >
-            {/* <button
-                onClick={() => setCount((curr) => curr + 1)}
-                className="absolute px-5 py-2 text-black bg-red-400 top-3"
-            >
-                {count}
-            </button> */}
             <CardsSection>
                 <Header title="Desserts" />
                 <Main>

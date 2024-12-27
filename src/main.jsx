@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import "./index.css";
 import App from "./App.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router";
-import CardDetail from "./pages/CardDetail.jsx";
+import CardDetail from "./pages/CardDetail/CardDetail.jsx";
 
 const router = createBrowserRouter([
     {

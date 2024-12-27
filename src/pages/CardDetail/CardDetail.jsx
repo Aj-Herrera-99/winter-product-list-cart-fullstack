@@ -1,7 +1,8 @@
 import React from "react";
-import { useLocation, useParams } from "react-router";
-import Header from "../components/Header";
+import { useLocation } from "react-router";
+import Header from "../../components/Header";
 
+// todo: da spostare in una cartella db
 const flavorColors = [
     { flavor: "almond", color: "#f5deb3" },
     { flavor: "custard", color: "#fff8dc" },
@@ -32,17 +33,18 @@ const flavorColors = [
 ];
 
 function CardDetail() {
-    const { cardID } = useParams();
     const location = useLocation();
     const product = location.state;
-    console.log(product);
+    // todo: migrare su styled-components per maggiore leggibilità
+    // todo: (non necessario) sistemare layout usando grid
+    // todo: strutturare in componenti
     return (
         <div className="max-w-full">
             <Header title={product.name} />
             <div className="sm:my-12 lg:flex lg:my-8 lg:gap-8">
                 <div>
                     <section className="flex mt-4 h-[30vh] sm:h-[37vh] lg:h-[50vh] rounded-sm overflow-hidden gap-1 md:gap-2">
-                        <div className="flex flex-col w-1/4 gap-1 overflow-y-auto md:gap-2 shrink-0 border-2 border-[#b3330c] rounded-md p-1">
+                        <div className="flex flex-col w-1/4 gap-1 p-1 overflow-y-auto rounded-md md:gap-2 shrink-0">
                             <picture>
                                 <source
                                     media="(min-width:1024px)"
@@ -107,7 +109,6 @@ function CardDetail() {
                                     `}
                                 />
                             </picture>
-                            
                         </div>
                         <div className="grow">
                             <picture>

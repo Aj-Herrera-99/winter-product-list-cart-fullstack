@@ -13,22 +13,25 @@ const ItemContainer = styled.div`
     overflow-y: auto;
     max-height: 50vh;
     @media (orientation: landscape) and (max-height: 640px) {
-        max-height: 125px;
+        max-height: 100px;
     }
 `;
 
 function Cart({ name }) {
     const { products } = useContext(GlobalContext);
-    
+
     const itemWrapperRef = useRef(null);
-    
+
+    // fixme: deve funzionare solo per tablet e desktop
     useEffect(() => {
-        if (itemWrapperRef.current?.childElementCount) {
-            itemWrapperRef.current.lastElementChild.scrollIntoView({
-                behavior: "smooth",
-                block: "end",
-                inline: "nearest",
-            });
+        if (document.body.offsetWidth > 768) {
+            if (itemWrapperRef.current?.childElementCount) {
+                itemWrapperRef.current.lastElementChild.scrollIntoView({
+                    behavior: "smooth",
+                    block: "end",
+                    inline: "nearest",
+                });
+            }
         }
     }, [products]);
 
@@ -39,7 +42,11 @@ function Cart({ name }) {
             }`}
         >
             <CartDesc name={name} />
-            <ItemContainer $name={name} className="item-wrapper" ref={itemWrapperRef}>
+            <ItemContainer
+                $name={name}
+                className="item-wrapper"
+                ref={itemWrapperRef}
+            >
                 {products.prods
                     .filter((product) => product.quantity > 0)
                     .map((product) => (

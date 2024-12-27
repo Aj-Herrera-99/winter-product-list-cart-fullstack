@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import CardButtons from "./CardButtons";
-import { Link, useLocation } from "react-router";
+import { Link } from "react-router";
 
 const CardWrapper = styled.div`
     font-weight: 600;

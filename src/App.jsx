@@ -118,11 +118,15 @@ function App() {
             .catch((err) => console.error(err));
     }, []);
 
+    // TODO: salvataggio del carrello anche al ricaricamento della pag
     useEffect(() => {
-        localStorage.clear();
-        products.prods.forEach((prod) =>
-            localStorage.setItem(prod.id, JSON.stringify(prod))
-        );
+        products.prods.forEach((prod) => {
+            if (!prod.quantity) {
+                localStorage.removeItem(prod.id);
+            } else {
+                localStorage.setItem(prod.id, JSON.stringify(prod));
+            }
+        });
     }, [products]);
 
     return (

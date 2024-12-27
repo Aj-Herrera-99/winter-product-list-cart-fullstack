@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import Header from "../../components/Header";
 
@@ -34,7 +34,8 @@ const flavorColors = [
 
 function CardDetail() {
     const location = useLocation();
-    const product = location.state;
+    let product = location.state;
+    // fixme: product è undefined quando si ricarica
     // todo: migrare su styled-components per maggiore leggibilità
     // todo: (non necessario) sistemare layout usando grid
     // todo: strutturare in componenti

@@ -65,19 +65,43 @@ function App() {
     });
 
     const incProdSel = (product) => {
-        dispatchProducts({ type: "INCREMENT", payload: product });
+        dispatchProducts({
+            type: "INCREMENT",
+            payload: product,
+            initData: initData,
+        });
+        const newData = initData.map((prod) =>
+            prod.id === product.id
+                ? { ...prod, quantity: prod.quantity + 1 }
+                : prod
+        );
+        setInitData(newData);
     };
 
     const decProdSel = (product) => {
         dispatchProducts({ type: "DECREMENT", payload: product });
+        const newData = initData.map((prod) =>
+            prod.id === product.id
+                ? { ...prod, quantity: prod.quantity - 1 }
+                : prod
+        );
+        setInitData(newData);
     };
 
     const remProdSel = (product) => {
         dispatchProducts({ type: "REMOVE", payload: product });
+        const newData = initData.map((prod) =>
+            prod.id === product.id ? { ...prod, quantity: 0 } : prod
+        );
+        setInitData(newData);
     };
 
     const resetQuantities = () => {
         dispatchProducts({ type: "RESET", payload: initData });
+        const resetData = initData.map((prod) =>
+            prod.quantity != 0 ? { ...prod, quantity: 0 } : prod
+        );
+        setInitData(resetData);
     };
 
     useEffect(() => {
@@ -89,10 +113,17 @@ function App() {
                     item.quantity = 0;
                 });
                 setInitData(data);
-                dispatchProducts({ type: "FETCH_INIT", payload: data });
+                // dispatchProducts({ type: "FETCH_INIT", payload: data });
             })
             .catch((err) => console.error(err));
     }, []);
+
+    useEffect(() => {
+        localStorage.clear();
+        products.prods.forEach((prod) =>
+            localStorage.setItem(prod.id, JSON.stringify(prod))
+        );
+    }, [products]);
 
     return (
         <GlobalContext.Provider
@@ -109,8 +140,8 @@ function App() {
             <CardsSection>
                 <Header title="Desserts" />
                 <Main>
-                    {products.prods.map((product) => (
-                            <Card key={product.id} product={product}></Card>
+                    {initData.map((product) => (
+                        <Card key={product.id} product={product}></Card>
                     ))}
                 </Main>
             </CardsSection>

@@ -64,6 +64,13 @@ function App() {
         total: 0,
     });
 
+    const getProdsSaved = (products) => {
+        dispatchProducts({
+            type: "GET_SAVED",
+            payload: products,
+        })
+    }
+
     const incProdSel = (product) => {
         dispatchProducts({
             type: "INCREMENT",
@@ -76,6 +83,13 @@ function App() {
                 : prod
         );
         setInitData(newData);
+        localStorage.setItem(
+            product.id,
+            JSON.stringify({
+                ...product,
+                quantity: product.quantity + 1,
+            })
+        );
     };
 
     const decProdSel = (product) => {
@@ -86,6 +100,17 @@ function App() {
                 : prod
         );
         setInitData(newData);
+        if (product.quantity <= 1) {
+            localStorage.removeItem(product.id);
+        } else {
+            localStorage.setItem(
+                product.id,
+                JSON.stringify({
+                    ...product,
+                    quantity: product.quantity - 1,
+                })
+            );
+        }
     };
 
     const remProdSel = (product) => {
@@ -94,6 +119,7 @@ function App() {
             prod.id === product.id ? { ...prod, quantity: 0 } : prod
         );
         setInitData(newData);
+        localStorage.removeItem(product?.id);
     };
 
     const resetQuantities = () => {
@@ -102,6 +128,7 @@ function App() {
             prod.quantity != 0 ? { ...prod, quantity: 0 } : prod
         );
         setInitData(resetData);
+        products.prods.forEach((prod) => localStorage.removeItem(prod.id));
     };
 
     useEffect(() => {
@@ -112,22 +139,35 @@ function App() {
                     item.id = index + 1;
                     item.quantity = 0;
                 });
-                setInitData(data);
+                if(!localStorage.length){
+                    setInitData(data);     
+                } else {
+                    data.forEach(prod => {
+                        if(localStorage.getItem(prod.id)){
+                            const prodSaved = JSON.parse(localStorage.getItem(prod.id));
+                            prod.quantity = prodSaved.quantity;
+                        } 
+                    })
+                    console.log(data)
+                    setInitData(data);
+                    getProdsSaved(data);
+                    
+                }
                 localStorage.setItem("initData", JSON.stringify(data));
             })
             .catch((err) => console.error(err));
     }, []);
 
     // TODO: salvataggio del carrello anche al ricaricamento della pag
-    useEffect(() => {
-        products.prods.forEach((prod) => {
-            if (!prod.quantity) {
-                localStorage.removeItem(prod.id);
-            } else {
-                localStorage.setItem(prod.id, JSON.stringify(prod));
-            }
-        });
-    }, [products]);
+    // useEffect(() => {
+    //     products.prods.forEach((prod) => {
+    //         if (!prod.quantity) {
+    //             localStorage.removeItem(prod.id);
+    //         } else {
+    //             localStorage.setItem(prod.id, JSON.stringify(prod));
+    //         }
+    //     });
+    // }, [products]);
 
     return (
         <GlobalContext.Provider

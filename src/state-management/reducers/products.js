@@ -1,6 +1,17 @@
 function productsReducer(state, action) {
-    if (action.type === "FETCH_INIT")
-        return { ...state, prods: action.payload };
+    if (action.type === "GET_SAVED") {
+        let count = 0;
+        let total = 0;
+        action.payload.forEach((prod) => {
+            count += prod.quantity;
+            total += prod.price * prod.quantity;
+        });
+        return {
+            prods: action.payload,
+            count,
+            total
+        };
+    }
 
     if (action.type === "INCREMENT") {
         const prodSel = state.prods.find(

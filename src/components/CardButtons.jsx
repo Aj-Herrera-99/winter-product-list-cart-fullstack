@@ -10,6 +10,8 @@ function CardButtons({ product }) {
     useEffect(() => {
         if (product.quantity === 0) {
             setIsZero(true);
+        } else {
+            setIsZero(false);
         }
     }, [product]);
 

@@ -6,6 +6,7 @@ import Header from "./components/Header";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import "./App.css";
+import { useNavigate } from "react-router";
 
 const CardsSection = styled.section`
     width: 100%;
@@ -56,6 +57,11 @@ const ModalContainer = styled.div`
 `;
 
 function App() {
+    const navigate = useNavigate();
+     useEffect(() => {
+         navigate(0); // forza la memorizzazione della storia di navigazione
+     }, []);
+
     const [initData, setInitData] = useState([]);
     const [isModal, setIsModal] = useState(false);
     const [products, dispatchProducts] = useReducer(productsReducer, {
@@ -68,8 +74,8 @@ function App() {
         dispatchProducts({
             type: "GET_SAVED",
             payload: products,
-        })
-    }
+        });
+    };
 
     const incProdSel = (product) => {
         dispatchProducts({
@@ -139,19 +145,20 @@ function App() {
                     item.id = index + 1;
                     item.quantity = 0;
                 });
-                if(!localStorage.length){
-                    setInitData(data);     
+                if (!localStorage.length) {
+                    setInitData(data);
                 } else {
-                    data.forEach(prod => {
-                        if(localStorage.getItem(prod.id)){
-                            const prodSaved = JSON.parse(localStorage.getItem(prod.id));
+                    data.forEach((prod) => {
+                        if (localStorage.getItem(prod.id)) {
+                            const prodSaved = JSON.parse(
+                                localStorage.getItem(prod.id)
+                            );
                             prod.quantity = prodSaved.quantity;
-                        } 
-                    })
-                    console.log(data)
+                        }
+                    });
+                    console.log(data);
                     setInitData(data);
                     getProdsSaved(data);
-                    
                 }
                 localStorage.setItem("initData", JSON.stringify(data));
             })

@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect } from "react";
+import { useReducer, useState, useEffect, useRef } from "react";
 import { GlobalContext } from "./state-management/stores/GlobalContext";
 import productsReducer from "./state-management/reducers/products";
 import styled from "styled-components";
@@ -57,10 +57,6 @@ const ModalContainer = styled.div`
 `;
 
 function App() {
-    const navigate = useNavigate();
-     useEffect(() => {
-         navigate(0); // forza la memorizzazione della storia di navigazione
-     }, []);
 
     const [initData, setInitData] = useState([]);
     const [isModal, setIsModal] = useState(false);

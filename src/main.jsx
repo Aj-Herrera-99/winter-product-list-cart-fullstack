@@ -1,11 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, createHashRouter, RouterProvider } from "react-router";
 import "./index.css";
 import App from "./App.jsx";
 import CardDetail from "./pages/CardDetail/CardDetail.jsx";
 
-const router = createBrowserRouter([
+const router =  createHashRouter([
     {
         path: "/",
         element: <App />,

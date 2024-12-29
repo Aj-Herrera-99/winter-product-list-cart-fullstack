@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CardButtons from "./CardButtons";
 import { Link } from "react-router";
-import { memo, useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { GlobalContext } from "../state-management/stores/GlobalContext";
 import "../App.css"
 

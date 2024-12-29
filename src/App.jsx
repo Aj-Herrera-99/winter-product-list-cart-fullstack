@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect, useRef, useCallback } from "react";
+import { useReducer, useState, useEffect, useRef } from "react";
 import { GlobalContext } from "./state-management/stores/GlobalContext";
 import productsReducer from "./state-management/reducers/products";
 import styled from "styled-components";
@@ -72,7 +72,7 @@ const CartButton = styled.div`
         border-radius: 50%;
         cursor: pointer;
         transition: all 0.3s ease;
-        opacity: 0.6;
+        opacity: 0.4;
         &:hover {
             scale: 1.1;
             opacity: 1;

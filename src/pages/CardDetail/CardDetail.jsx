@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import Header from "../../components/Header";
+import styled from "styled-components";
 
 // todo: da spostare in una cartella db
 const flavorColors = [
@@ -32,6 +33,12 @@ const flavorColors = [
     { flavor: "strawberry", color: "#ff6347" },
 ];
 
+const ImageSection = styled.section`
+    @media (orientation: landscape) and (max-height: 640px) and (max-width: 1000px) {
+        height: 80vh;
+    }
+`
+
 function CardDetail() {
     const { cardID } = useParams();
     const location = useLocation();
@@ -48,7 +55,7 @@ function CardDetail() {
             <Header title={product.name} />
             <div className="sm:my-12 lg:flex lg:my-8 lg:gap-8">
                 <div>
-                    <section className="flex mt-4 h-[30vh] sm:h-[37vh] lg:h-[50vh] rounded-sm overflow-hidden gap-1 md:gap-2">
+                    <ImageSection className="flex mt-4 h-[30vh] sm:h-[37vh] lg:h-[50vh] rounded-sm overflow-hidden gap-1 md:gap-2">
                         <div className="flex flex-col w-1/4 gap-1 p-1 overflow-y-auto rounded-md md:gap-2 shrink-0">
                             <picture>
                                 <source
@@ -149,7 +156,7 @@ function CardDetail() {
                                 />
                             </div>
                         </div>
-                    </section>
+                    </ImageSection>
                 </div>
                 <div className="lg:w-2/5">
                     <section className="w-full my-3 sm:my-4">

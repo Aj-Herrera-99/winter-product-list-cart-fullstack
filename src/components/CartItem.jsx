@@ -33,7 +33,7 @@ function CartItem({ product, name }) {
             {name === "cart" && (
                 <i
                     onClick={() => remProdSel(product)}
-                    className="flex items-center justify-center w-6 border border-[#87635a] text-[#87635a] rounded-full cursor-pointer fa-solid fa-xmark hover:scale-110 aspect-square hover:text-[#260f08] hover:border-[#260f08]"
+                    className="flex items-center justify-center w-6 border border-[#87635a] text-[#87635a] rounded-full cursor-pointer fa-solid fa-xmark scale-90 hover:scale-100 aspect-square hover:text-[#260f08] hover:border-[#260f08]"
                 ></i>
             )}
         </div>

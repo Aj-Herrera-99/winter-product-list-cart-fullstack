@@ -6,7 +6,6 @@ import Header from "./components/Header";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import "./App.css";
-import { useNavigate } from "react-router";
 
 const CardsSection = styled.section`
     width: 100%;
@@ -41,7 +40,7 @@ const ModalContainer = styled.div`
     display: ${(props) => (props.$isModal ? "flex" : "none")};
     background-color: rgba(0, 0, 0, 0.5);
     width: 100%;
-    height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     position: fixed;
@@ -57,7 +56,6 @@ const ModalContainer = styled.div`
 `;
 
 function App() {
-
     const [initData, setInitData] = useState([]);
     const [isModal, setIsModal] = useState(false);
     const [products, dispatchProducts] = useReducer(productsReducer, {
@@ -71,6 +69,7 @@ function App() {
             type: "GET_SAVED",
             payload: products,
         });
+
     };
 
     const incProdSel = (product) => {
@@ -160,17 +159,6 @@ function App() {
             })
             .catch((err) => console.error(err));
     }, []);
-
-    // TODO: salvataggio del carrello anche al ricaricamento della pag
-    // useEffect(() => {
-    //     products.prods.forEach((prod) => {
-    //         if (!prod.quantity) {
-    //             localStorage.removeItem(prod.id);
-    //         } else {
-    //             localStorage.setItem(prod.id, JSON.stringify(prod));
-    //         }
-    //     });
-    // }, [products]);
 
     return (
         <GlobalContext.Provider

@@ -12,7 +12,10 @@ const ItemContainer = styled.div`
     overflow-x: hidden;
     overflow-y: auto;
     max-height: 50vh;
-    @media (orientation: landscape) and (max-height: 640px) {
+    @media (orientation: landscape) {
+        max-height: 35vh;
+    }
+    @media (orientation: landscape) and (max-height: 640px) and (max-width: 1000px) {
         max-height: 100px;
     }
 `;
@@ -22,7 +25,6 @@ function Cart({ name }) {
 
     const itemWrapperRef = useRef(null);
 
-    // fixme: deve funzionare solo per tablet e desktop
     useEffect(() => {
         if (document.body.offsetWidth > 768) {
             if (itemWrapperRef.current?.childElementCount) {
@@ -37,7 +39,7 @@ function Cart({ name }) {
 
     return (
         <div
-            className={`bg-white rounded-lg p-5 mt-5 w-full font-semibold max-h-[95vh] ${
+            className={`bg-white rounded-lg p-5 mt-5 w-full font-semibold max-h-[90vh] ${
                 name == "cart" && "md:fixed md:max-w-[25vw]"
             }`}
         >

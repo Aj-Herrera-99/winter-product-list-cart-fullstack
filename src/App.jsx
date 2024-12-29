@@ -1,4 +1,4 @@
-import { useReducer, useState, useEffect, useRef } from "react";
+import { useReducer, useState, useEffect, useRef, useCallback } from "react";
 import { GlobalContext } from "./state-management/stores/GlobalContext";
 import productsReducer from "./state-management/reducers/products";
 import styled from "styled-components";
@@ -14,6 +14,8 @@ const CardsSection = styled.section`
     }
 `;
 const CartSection = styled.section`
+position: relative;
+z-index: 20;
     width: 100%;
     @media (min-width: 640px) {
         padding-inline: 2rem;
@@ -46,6 +48,7 @@ const ModalContainer = styled.div`
     position: fixed;
     justify-content: center;
     align-items: end;
+    z-index: 30;
     @media (min-width: 640px) {
         padding-inline: 25%;
         align-items: center;
@@ -54,6 +57,33 @@ const ModalContainer = styled.div`
         padding-inline: 35%;
     }
 `;
+
+const CartButton = styled.div`
+    display: none;
+    @media (max-width: 640px) {
+        display: block;
+        position: fixed;
+        bottom: 35px;
+        right: 35px;
+        z-index: 10;
+        background-color: rgba(255, 0, 0, 0.8);
+        padding: 0.75rem;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        opacity: 0.6;
+        &:hover {
+            scale: 1.1;
+            opacity: 1;
+        }
+    }
+`;
+const CartImg = styled.img`
+    filter: brightness(0) saturate(100%) invert(95%) sepia(100%) saturate(14%)
+        hue-rotate(213deg) brightness(104%) contrast(104%);
+`;
+
 
 function App() {
     const [initData, setInitData] = useState([]);
@@ -64,20 +94,23 @@ function App() {
         total: 0,
     });
 
+    const cartBtnRef = useRef(null);
+
     const getProdsSaved = (products) => {
         dispatchProducts({
             type: "GET_SAVED",
             payload: products,
         });
-
     };
 
     const incProdSel = (product) => {
-        dispatchProducts({
-            type: "INCREMENT",
-            payload: product,
-            initData: initData,
-        });
+        dispatchProducts(
+            {
+                type: "INCREMENT",
+                payload: product,
+                initData: initData,
+            },
+        );
         const newData = initData.map((prod) =>
             prod.id === product.id
                 ? { ...prod, quantity: prod.quantity + 1 }
@@ -132,6 +165,14 @@ function App() {
         products.prods.forEach((prod) => localStorage.removeItem(prod.id));
     };
 
+    const scrollToCart = () => {
+        document.body.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+            inline: "nearest",
+        });
+    };
+
     useEffect(() => {
         fetch("./assets/data.json")
             .then((res) => res.json())
@@ -170,8 +211,18 @@ function App() {
                 resetQuantities,
                 isModal,
                 setIsModal,
+                cartBtnRef,
             }}
         >
+            <CartButton ref={cartBtnRef}>
+                <CartImg
+                    onClick={scrollToCart}
+                    src="./assets/images/icon-add-to-cart.svg"
+                    alt="icon add to
+                    cart"
+                    className="w-8"
+                ></CartImg>
+            </CartButton>
             <CardsSection>
                 <Header title="Desserts" />
                 <Main>
